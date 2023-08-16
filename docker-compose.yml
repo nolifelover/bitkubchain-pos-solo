@@ -1,0 +1,35 @@
+version: "3"
+services:
+  bkc-solo:
+    image: bitkubchain/geth:18.10
+    build: .
+    platform: linux/amd64
+    container_name: bkc-solo
+    env_file:
+      - .env
+    command:
+      [
+        '--datadir=/bkc-node/mainnet/data',
+        '--syncmode',
+        'snap',
+        '--mine',
+        '--unlock',
+        '${WALLET_ADDRESS}',
+        '--password',
+        '/bkc-node/mainnet/password.txt',
+        '--config',
+        '/bkc-node/mainnet/config.toml'
+      ]
+    ports:
+      - "30303:30303/udp"
+      - "30303:30303"
+      - "8545:8545"
+      - "8546:8546"
+    restart: always
+    healthcheck:
+      test: wget http://localhost:8545
+      interval: 2s
+      timeout: 5s
+      retries: 30
+    volumes:
+      - ./:/bkc-node/mainnet
