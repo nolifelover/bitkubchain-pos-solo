@@ -10,15 +10,12 @@ services:
     command:
       [
         '--datadir=/bkc-node/mainnet/data',
-        '--syncmode',
-        'snap',
+        '--syncmode=snap',
+        '--allow-insecure-unlock',
         '--mine',
-        '--unlock',
-        '${WALLET_ADDRESS}',
-        '--password',
-        '/bkc-node/mainnet/password.txt',
-        '--config',
-        '/bkc-node/mainnet/config.toml'
+        '--unlock=${WALLET_ADDRESS}',
+        '--password=/bkc-node/mainnet/pass.txt',
+        '--config=/bkc-node/mainnet/config.toml'
       ]
     ports:
       - "30303:30303/udp"
