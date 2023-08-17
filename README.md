@@ -76,3 +76,28 @@ docker compose up
 
 ```
 
+#### 6. Checking docker process and syncing status
+
+```bash
+# checking docker compose is running correctly
+docker compose logs -f
+
+# checking syncing status
+deth attach --datadir=/bkc-node/mainnet/data
+
+# output
+Welcome to the Geth JavaScript console!
+
+instance: Geth/v2.1.0-bkc-stable-8ee54552/linux-amd64/go1.18.10
+coinbase: 0xab87f23e2f26f46b636f413b921b690a00b222e8
+at block: 0 (Wed Apr 28 2021 06:23:17 GMT+0000 (UTC))
+ datadir: /bkc-node/mainnet/data
+ modules: admin:1.0 clique:1.0 debug:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 txpool:1.0 web3:1.0
+
+To exit, press ctrl-d or type exit
+> 
+
+
+# get sycing status
+> eth.syncing
+```
