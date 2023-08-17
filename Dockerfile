@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM debian:bullseye-slim
 
 #Install lastest geth from bitkub
 RUN apt-get update && apt-get install curl -y
