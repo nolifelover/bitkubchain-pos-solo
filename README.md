@@ -1,9 +1,26 @@
 ## BitkubChain Solo Validator Node
 This repository contain data for BikubChain POS validator node. It competible with linux/amd64 because geth from BikubChain official suport only linux/amd64
 
-#### 1. Build local image geth
-```
+#### 1. Build local docker image and create alias cmd
+```bash
+# build docker image 
 docker build -t bitkubchain/geth:2.1.0 .
+# create alias
+alias deth='docker run --rm -v $(pwd):/bkc-node/mainnet -it bitkubchain/geth:2.1.0'
+# testing alias
+deth version
+
+# output
+Geth
+Version: 2.1.0-bkc-stable
+Git Commit: 8ee545524b9411c306ebb62bcbfa4536264e20c2
+Git Commit Date: 20230802
+Architecture: amd64
+Go Version: go1.18.10
+Operating System: linux
+GOPATH=
+GOROOT=go
+
 ```
 
 #### 2. Create a new validator account
@@ -14,7 +31,7 @@ cp pass.txt.example pass.txt
 vi pass.txt
 
 # create new account
-docker run --rm -v $(pwd):/bkc-node/mainnet -it bitkubchain/geth:2.1.0 --datadir /bkc-node/mainnet/data account new --password bkc-node/mainnet/pass.txt
+deth --datadir /bkc-node/mainnet/data account new --password bkc-node/mainnet/pass.txt
 
 # output
 Your new key was generated
@@ -31,7 +48,7 @@ Path of the secret key file: /bkc-node/mainnet/data/keystore/UTC--2023-08-16T18-
 #### 3. Initialize a genesis file
 ```bash
 # initialize
-docker run --rm -v $(pwd):/bkc-node/mainnet -it bitkubchain/geth:2.1.0 --datadir /bkc-node/mainnet/data init /bkc-node/mainnet/genesis.json
+deth --datadir /bkc-node/mainnet/data init /bkc-node/mainnet/genesis.json
 
 # output
 INFO [08-16|18:42:25.432] Writing custom genesis block 
