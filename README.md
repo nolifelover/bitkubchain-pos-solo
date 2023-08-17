@@ -1,7 +1,12 @@
 ## BitkubChain Solo Validator Node
 This repository contain data for BikubChain POS validator node. It competible with linux/amd64 because geth from BikubChain official suport only linux/amd64
 
-#### 1. Create a new validator account
+#### 1. Build local image geth
+```
+docker build -t bitkubchain/geth:2.1.0 .
+```
+
+#### 2. Create a new validator account
 
 ```bash
 # change pass.txt to your password
@@ -9,7 +14,7 @@ cp pass.txt.example pass.txt
 vi pass.txt
 
 # create new account
-docker run --rm -v $(pwd):/bkc-node/mainnet -it ethereum/client-go:stable --datadir /bkc-node/mainnet/data account new --password bkc-node/mainnet/pass.txt
+docker run --rm -v $(pwd):/bkc-node/mainnet -it bitkubchain/geth:2.1.0 --datadir /bkc-node/mainnet/data account new --password bkc-node/mainnet/pass.txt
 
 # output
 Your new key was generated
@@ -23,10 +28,10 @@ Path of the secret key file: /bkc-node/mainnet/data/keystore/UTC--2023-08-16T18-
 - You must REMEMBER your password! Without the password, it's impossible to decrypt the key!
 ```
 
-#### 2. Initialize a genesis file
+#### 3. Initialize a genesis file
 ```bash
 # initialize
-docker run --rm -v $(pwd):/bkc-node/mainnet -it ethereum/client-go:stable --datadir /bkc-node/mainnet/data init /bkc-node/mainnet/genesis.json
+docker run --rm -v $(pwd):/bkc-node/mainnet -it bitkubchain/geth:2.1.0 --datadir /bkc-node/mainnet/data init /bkc-node/mainnet/genesis.json
 
 # output
 INFO [08-16|18:42:25.432] Writing custom genesis block 
@@ -34,7 +39,7 @@ INFO [08-16|18:42:25.433] Persisted trie from memory database      nodes=4 size=
 INFO [08-16|18:42:25.443] Successfully wrote genesis state         database=lightchaindata                        hash=8a0f3e..158071
 ```
 
-#### 3. Change wallet address in .env
+#### 4. Change wallet address in .env
 ```bash
 # copy .env.example to .env
 cp .env.example .env
@@ -44,7 +49,7 @@ vi .env
 WALLET_ADDRESS="0xF750B418d28e5Ea3443E2e04956d69125f7f062E"
 ```
 
-#### 4. Running validator node using docker compose
+#### 5. Running validator node using docker compose
 ```bash
 # if using mac chip M1,M2
 export DOCKER_DEFAULT_PLATFORM=linux/amd64

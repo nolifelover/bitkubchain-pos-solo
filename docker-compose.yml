@@ -1,8 +1,7 @@
 version: "3"
 services:
   bkc-solo:
-    image: bitkubchain/geth:18.10
-    build: .
+    image: bitkubchain/geth:2.1.0
     platform: linux/amd64
     container_name: bkc-solo
     env_file:
